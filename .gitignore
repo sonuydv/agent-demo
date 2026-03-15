@@ -3,7 +3,7 @@
 venv/*
 
 #ignore python output cache files
-app/__pycache__/*
+__pycache__
 
 #ignore enviornment values
 *.env

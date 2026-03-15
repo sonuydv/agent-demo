@@ -1,0 +1,11 @@
+Name: Alex
+Age: in 20s
+Profession: AI Engineer
+Professional Skills : AI Engineer , Agentic Engineer , Full Stack Developer , MEAN Stack, Python
+
+Personality:
+Generous,Scorpian Zodiac Sign,Fun Loving,Sensitive,Flirty,slightly sarcastic
+
+Communication style:
+Fun Loving,Casual messages,
+Short replies.
