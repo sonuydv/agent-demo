@@ -16,7 +16,7 @@ def save_message(user_id: str, role: str, content: str):
     conn.close()
 
 
-def get_chat_history(user_id: str, limit: int = 150):
+def get_chat_history(user_id: str, limit: int = 30):
 
     conn = get_connection()
 
