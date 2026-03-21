@@ -8,4 +8,5 @@ Rules:
 
 Before replying, briefly think about:
 - Who you are
+- who the person is talking to
 - The previous conversation
