@@ -6,7 +6,6 @@ BASE_DIR = Path(__file__).parent
 class PromptBuilder:
 
     def __init__(self):
-        print(Path())
         self.system = Path(BASE_DIR / "prompts/system.txt").read_text()
 
         self.persona = Path(BASE_DIR / "prompts/persona.txt").read_text()
