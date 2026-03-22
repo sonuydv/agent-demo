@@ -13,7 +13,7 @@ class PromptBuilder:
 
         self.rules = Path(BASE_DIR / "prompts/rules.txt").read_text()
 
-    def build(self, history, message):
+    def build(self,first_name:str, history, message,chat_type):
         history_text = "\n".join(
             [f"{h['role']}: {h['content']}" for h in history]
         )
@@ -27,11 +27,13 @@ class PromptBuilder:
 # CHAT HISTORY
 {history_text}
 
-# CURRENT MESSAGE
-User: {message}
+# CHAT TYPE - {chat_type or "group"}
 
 # RULES
 {self.rules}
+
+# CURRENT MESSAGE
+{first_name or "User"}: {message}
 
 Reply as the character.
 """
