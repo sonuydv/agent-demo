@@ -1,3 +1,5 @@
+import json
+
 from agents.alex.prompt_builder import PromptBuilder
 from agents.alex.chat.chats_sqlite import get_chat_history,save_message
 from llm import ask_llm
@@ -12,6 +14,38 @@ from dotenv import load_dotenv
 load_dotenv()
 
 promptBuilder = PromptBuilder()
+
+
+def is_valid_response(text: str) -> bool:
+    try:
+        data = json.loads(text)
+
+        # Required keys
+        if "shouldReply" not in data or "reply" not in data:
+            return False
+
+        # Type checks
+        if not isinstance(data["shouldReply"], bool):
+            return False
+
+        if not isinstance(data["reply"], str):
+            return False
+
+        return True
+
+    except json.JSONDecodeError:
+        return False
+
+def safe_run_agent(prompt: str):
+    for _ in range(3):
+        response = ask_llm(prompt)
+
+        if is_valid_response(response):
+            data = json.loads(response)
+            return data
+
+    raise ValueError("Failed to get response!")
+
 
 
 def run_agent(chat_id:str,first_name:str,chat_type:str, user_message:str):
@@ -29,11 +63,16 @@ def run_agent(chat_id:str,first_name:str,chat_type:str, user_message:str):
         chat_type=chat_type
     )
     # LLM response reply
-    response =  ask_llm(prompt)
+    try:
+        response = safe_run_agent(prompt)
+        if response['shouldReply']:
+            # Save agent reply to user chat history
+            save_message(chat_id, "assistant", response['reply'])
+            return response['reply']
 
-    # Save agent reply to user chat history
-    save_message(chat_id, "assistant", response)
-    return response
+    except ValueError as e:
+        return "Sorry, I missed what did you say"
+
 
 
 
